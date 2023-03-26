@@ -1,41 +1,45 @@
 #include "main.h"
 /**
  * _printf - prints a name
+ * _putchar - prints a char c
  * @format: string containing the name to print
  * Return: printed characters
  */
 int _printf(const char *format, ...)
 {
-va_list args;
 int count = 0;
+va_list args;
 va_start(args, format);
 
-while (*format)
+while (*format != '\0')
 {
 if (*format == '%')
 {
 format++;
-switch (*format)
+if (*format == 'c')
 {
-case 'c':
-count += putchar(va_arg(args, int));
-break;
-case 's':
-count += puts(va_arg(args, char *));
-break;
-case '%':
-count += putchar('%');
-break;
-default:
-putchar('%');
-putchar(*format);
-count += 2;
-break;
+char c = (char)va_arg(args, int);
+write(1, &c, 1);
+count++;
+}
+else if (*format == 's')
+{
+char *s = va_arg(args, char*);
+int len = 0;
+while (s[len] != '\0')
+len++;
+write(1, s, len);
+count += len;
+}
+else if (*format == '%')
+{
+write(1, "%", 1);
+count++;
 }
 }
 else
 {
-putchar(*format);
+write(1, format, 1);
 count++;
 }
 format++;
