@@ -38,7 +38,7 @@ else
 putchar(*format);
 count++;
 }
-format++
+format++;
 }
 va_end(args);
 return (count);
