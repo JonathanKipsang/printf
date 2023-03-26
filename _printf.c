@@ -14,7 +14,7 @@ return (1);
 /**
  * print_str - Prints a string to the standard output
  * @arg: A va_list containing the string to print
- * Return: The number of characters printed
+ * Return: The number of characters printed..
 */
 int print_str(va_list arg)
 {
