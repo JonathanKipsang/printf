@@ -1,92 +1,103 @@
 #include "main.h"
-
 /**
- * print_char - prints a single character to the standard output
+ * _putchar - prints a single character to the standard output
  * @c: A character to print
  * Return: The number of characters printed (always 1)
  */
-int print_char(char c)
+int _putchar(char c)
 {
 return (write(1, &c, 1));
 }
-
 /**
- * print_str - Prints a string to the standard output
- * @arg: A va_list containing the string to print
- * Return: The number of characters printed.
- */
-int print_str(va_list arg)
+* print_char - Prints a char to stdout
+* @arg: va_list argument with the char to be printed
+*
+* Return: The number of characters printed (always 1)
+*/
+int print_char(va_list arg)
 {
-char *s = va_arg(arg, char *);
-int len = 0;
-
-if (s == NULL)
-{
-write(1, "(null)", 6);
-return (6);
-}
-while (s[len])
-len++;
-write(1, s, len);
-return (len);
-}
-
-/**
- * print_percent - prints a percent character to the standard output
- * @arg: A va_list containing no arguments (unused)
- * Return: The number of characters printed (always 1)
- */
-int print_percent(va_list arg)
-{
-(void)arg;
-write(1, "%", 1);
+char c = va_arg(arg, int);
+_putchar(c);
 return (1);
 }
 
 /**
- * _printf - Custom printf function that supports %c, %s, and %%
- * @format: A format string containing zero or more directives
- * Return: The number of characters printed
- */
+* print_str - Prints a string to stdout
+* @arg: va_list argument with the string to be printed
+*
+* Return: The number of characters printed (excluding null byte)
+*/
+int print_str(va_list arg)
+{
+char *str = va_arg(arg, char*);
+int count = 0;
+
+if (!str)
+str = "(null)";
+while (*str)
+{
+_putchar(*str++);
+count++;
+}
+return (count);
+}
+
+/**
+* print_percent - Prints a percent sign to stdout
+* @arg: Unused
+*
+* Return: Always returns 1 (the number of characters printed)
+*/
+int print_percent(va_list arg __attribute__((unused)))
+{
+_putchar('%');
+return (1);
+}
+
+/**
+* _printf - Our own printf function
+* @format: A character string, composed of zero or more directives
+*
+* Description: Writes a formatted string to the standard output
+* Return: An integer. The number of characters printed (excluding null byte)
+*/
 int _printf(const char *format, ...)
 {
-va_list arg;
-int i, len = 0;
-va_start(arg, format);
+int count = 0;
+va_list args;
 
-if (format == NULL)
-return (-1);
+va_start(args, format);
 
-for (i = 0; format[i] != '\0'; i++)
+while (format && *format)
 {
-if (format[i] != '%')
+if (*format == '%')
 {
-write(1, &format[i], 1);
-len++;
-continue;
-}
-
-switch (format[++i])
+format++;
+switch (*format)
 {
 case 'c':
-len += print_char(va_arg(arg, int));
+count += print_char(args);
 break;
-
 case 's':
-len += print_str(arg);
+count += print_str(args);
 break;
-
 case '%':
-len += print_percent(arg);
+count += print_percent(args);
 break;
-
 default:
-write(1, "%", 1);
-write(1, &format[i], 1);
-len += 2;
+_putchar('%');
+_putchar(*format);
+count += 2;
 break;
 }
 }
-va_end(arg);
-return (len);
+else
+{
+_putchar(*format);
+count++;
+}
+format++;
+}
+va_end(args);
+return (count);
 }
