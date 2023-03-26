@@ -1,14 +1,12 @@
 #include "main.h"
 /**
  * print_char - prints a single character to the standard output
- * @arg: A va_list containing the character to print
+ * @c: A character to print
  * Return: The number of characters printed (always 1)
  */
-int print_char(va_list arg)
+int print_char(char c)
 {
-char c = va_arg(arg, int);
-write(1, &c, 1);
-return (1);
+return (write(1, &c, 1));
 }
 
 /**
@@ -88,7 +86,6 @@ len += 2;
 break;
 }
 }
-
 va_end(arg);
 return (len);
 }
