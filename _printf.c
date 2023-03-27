@@ -18,27 +18,17 @@ return (write(1, &c, 1));
  * Return: On success the number of characters printed.
  * On error, -1 is returned, and errno is set appropriately.
  */
-int _puts(const char *s)
+int _puts(char *s)
 {
-int count = 0;
+	int i = 0;
 
-while (*s != '\0')
-{
-if (write(STDOUT_FILENO, s, 1) == -1)
-{
-return (EOF);
-}
-s++;
-count++;
-}
-
-if (write(STDOUT_FILENO, "\n", 1) == -1)
-{
-return (EOF);
-}
-count++;
-
-return (count);
+	while (*s != '\0')
+	{
+		_putchar(*s);
+		s++;
+		i++;
+	}
+	return (i);
 }
 /**
  * handle_specifier - handles the conversion specifier character
@@ -55,7 +45,6 @@ int handle_specifier(char specifier, va_list arg_list)
 {
 int count = 0;
 char *str;
-int num;
 
 switch (specifier)
 {
