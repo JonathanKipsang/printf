@@ -88,17 +88,17 @@ count += _puts("(null)");
 else
 count += _puts(str);
 break;
+case 'd':
+case 'i':
+num = va_arg(arg_list, int);
+count += print_number(num);
+break;
 case '%':
 count += _putchar('%');
 break;
 default:
 count += _putchar('%');
 count += _putchar(specifier);
-break;
-case 'd':
-case 'i':
-num = va_arg(arg_list, int);
-count += print_number(num);
 break;
 }
 return (count);
