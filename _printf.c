@@ -45,6 +45,7 @@ int handle_specifier(char specifier, va_list arg_list)
 {
 int count = 0;
 char *str;
+int num;
 
 switch (specifier)
 {
@@ -64,6 +65,11 @@ break;
 default:
 count += _putchar('%');
 count += _putchar(specifier);
+break;
+case 'd':
+case 'i':
+num = va_arg(arg_list, int);
+count += print_number(num);
 break;
 }
 return (count);
